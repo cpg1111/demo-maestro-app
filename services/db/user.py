@@ -1,7 +1,8 @@
-from mongoengine import Document, StringField, ListField, ReferenceField
+from umongo import Document
+from umongo.fields import StringField, ListField, ReferenceField
 
 class User(Document):
-    __collection__ = "users"
+    collection_name = "users"
 
     first_name = StringField(required=True)
     last_name = StringField(required=True)

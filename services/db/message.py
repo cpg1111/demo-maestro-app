@@ -1,7 +1,8 @@
-from mongoengine import Document, StringField, ReferenceField
+from umongo import Document
+from umongo.fields import StringField, ListField, ReferenceField
 
 class Messages(Document):
-    __collection__ = "messages"
+    collection_name = "messages"
 
     sender = ReferenceField("Users")
     content = StringField(required=True)
