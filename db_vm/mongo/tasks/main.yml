@@ -1,0 +1,18 @@
+---
+- name: Update Apt Cache
+  apt: update_cache=yes cache_valid_time=3600
+  register: refreshcache
+
+- name: Install Mongo
+  apt: pkg=mongodb state=installed
+  when: refreshcache | success
+  register: installmongo
+
+- name: Create mongodb.conf
+  copy: src=mongodb.conf dest=/etc/mongodb.conf
+  when: installmongo | success
+  register: createmongodbconf
+
+- name: Restart Mongo
+  shell: service mongodb restart
+  when: createmongodbconf | success
