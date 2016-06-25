@@ -1,5 +1,5 @@
 from umongo import Document
-from umongo.fields import StringField, ListField, ReferenceField
+from umongo.fields import StringField, ListField, ReferenceField, DateTimeField
 
 class Messages(Document):
     collection_name = "messages"

@@ -1,7 +1,7 @@
 from umongo import Document
 from umongo.fields import StringField, ListField, ReferenceField
 
-class User(Document):
+class Users(Document):
     collection_name = "users"
 
     first_name = StringField(required=True)
