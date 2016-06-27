@@ -4,7 +4,13 @@ from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketClientF
 
 class ChatProtocol(WebSocketServerProtocol):
 
-    def onConnect(sef, request):
+    rooms = {}
+
+    def onConnect(self, request):
+        room = request.args.room
+        if rooms[room] == None :
+            rooms[room] = {}
+            rooms[room][request.args.clientId] = request
         print("Client connecting : {}", format(request.peer))
 
     def onOpen(self):
