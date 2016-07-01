@@ -19,7 +19,7 @@ BuildLogFilePath="./db.log"
 BuildCMD="docker build -t demo_db ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
-CreateCMD=""
+CreateCMD="echo 'force a build'"
 UpdateCMD=""
 DependsOn=[]
 
