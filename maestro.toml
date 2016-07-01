@@ -33,7 +33,7 @@ BuildCMD="docker build -t demo_auth ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
 CreateCMD="echo 'and you get a build'"
-UpdateCMD=""
+UpdateCMD="echo 'build all the things'"
 DependsOn=["db"]
 
 [[Service]]
