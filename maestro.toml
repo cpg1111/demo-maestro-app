@@ -20,7 +20,7 @@ BuildCMD="docker build -t demo_db ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
 CreateCMD="echo 'force a build'"
-UpdateCMD=""
+UpdateCMD="echo 'force another build'"
 DependsOn=[]
 
 [[Service]]
