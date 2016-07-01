@@ -32,7 +32,7 @@ BuildLogFilePath="./auth.log"
 BuildCMD="docker build -t demo_auth ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
-CreateCMD=""
+CreateCMD="echo 'and you get a build'"
 UpdateCMD=""
 DependsOn=["db"]
 
