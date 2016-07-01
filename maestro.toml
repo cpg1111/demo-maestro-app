@@ -45,7 +45,7 @@ BuildLogFilePath="./chat.log"
 BuildCMD="docker build -t demo_chat ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
-CreateCMD=""
+CreateCMD="echo 'again'"
 UpdateCMD=""
 DependsOn=["db"]
 
