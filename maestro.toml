@@ -46,7 +46,7 @@ BuildCMD="docker build -t demo_chat ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
 CreateCMD="echo 'again'"
-UpdateCMD="echo 'triste'"
+UpdateCMD="echo 'tri'"
 DependsOn=["db"]
 
 
