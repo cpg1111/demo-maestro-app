@@ -1,0 +1,52 @@
+[Environment]
+
+[Project]
+RepoURL="git@github.com:cpg1111/demo-maestro-app.git"
+CloneCMD="git clone"
+AuthType="SSH"
+SSHPrivKeyPath="~/.ssh/id_rsa"
+SSHPubKeyPath="~/.ssh/id_rsa.pub"
+Username="git"
+Password=""
+PromptForPWD=false
+
+[[Service]]
+Name="db"
+Tag="0.1.1"
+TagType=""
+Path="./services/db"
+BuildLogFilePath="./db.log"
+BuildCMD="docker build -t demo_db ."
+TestCMD="echo 'hello'"
+CheckCMD="echo 'hello'"
+CreateCMD="echo 'force a build'"
+UpdateCMD=""
+DependsOn=[]
+
+[[Service]]
+Name="auth"
+Tag="0.1.1"
+TagType=""
+Path="./services/auth"
+BuildLogFilePath="./auth.log"
+BuildCMD="docker build -t demo_auth ."
+TestCMD="echo 'hello'"
+CheckCMD="echo 'hello'"
+CreateCMD="echo 'and you get a build'"
+UpdateCMD="echo 'build all the things'"
+DependsOn=["db"]
+
+[[Service]]
+Name="chat"
+Tag="0.1.1"
+TagType=""
+Path="./services/chat"
+BuildLogFilePath="./chat.log"
+BuildCMD="docker build -t demo_chat ."
+TestCMD="echo 'hello'"
+CheckCMD="echo 'hello'"
+CreateCMD="echo 'again'"
+UpdateCMD="echo 'tri'"
+DependsOn=["db"]
+
+
