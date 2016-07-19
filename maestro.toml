@@ -1,4 +1,14 @@
 [Environment]
+ExecSync=[
+    "/root/google-cloud-sdk/bin/gcloud auth activate-service-account 762577118557-compute@developer.gserviceaccount.com --key-file /etc/keys/gce-key.json --project cloudprojects-1164",
+    "/root/google-cloud-sdk/bin/gcloud docker --authorize-only"
+]
+Exec=[
+    "docker pull us.gcr.io/cloudprojects-1164/demo_auth",
+    "docker pull us.gcr.io/cloudprojects-1164/demo_chat",
+    "docker pull us.gcr.io/cloudprojects-1164/demo_db,
+    "docker build -t demo_auth_test -f ./services/auth/Dockerfile_test ."
+]
 
 [Project]
 RepoURL="git@github.com:cpg1111/demo-maestro-app.git"
@@ -15,7 +25,7 @@ Name="db"
 Tag="0.1.1"
 TagType=""
 Path="./services/db"
-BuildLogFilePath="./db.log"
+BuildLogFilePath="/var/log/maestro/demo_db.log"
 BuildCMD="docker build -t demo_db ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
@@ -28,7 +38,7 @@ Name="auth"
 Tag="0.1.1"
 TagType=""
 Path="./services/auth"
-BuildLogFilePath="./auth.log"
+BuildLogFilePath="/var/log/maestro/demo_auth.log"
 BuildCMD="docker build -t demo_auth ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"
@@ -41,7 +51,7 @@ Name="chat"
 Tag="0.1.1"
 TagType=""
 Path="./services/chat"
-BuildLogFilePath="./chat.log"
+BuildLogFilePath="/var/log/maestro/demo_chat.log"
 BuildCMD="docker build -t demo_chat ."
 TestCMD="echo 'hello'"
 CheckCMD="echo 'hello'"

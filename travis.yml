@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+  - mongo
+before_install:
+  - mkdir -p /etc/keys/
+  - echo $GCLOUD_KEY > /etc/keys/gce-key.json
+  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file /etc/keys/gce-key.json --project cloudprojects-1164
+  - gcloud docker --authorize-only
+  - docker pull us.gcr.io/cloudprojects-1164/demo_db
+  - docker pull us.gcr.io/cloudprojects-1164/demo_auth
+  - docker pull us.gcr.io/cloudprojects-1164/demo_chat
+  - docker build -t demo_auth_test -f ./services/auth/Dockerfile_test .
+script:
+  - docker run --rm -it -e DB_CONNECT_STRING=$DB_CONNECT_STRING demo_auth_test
+after_success:
+  - docker build -t us.gcr.io/cloudprojects-1164/demo_db:$TRAVIS_COMMIT $HOME/demo-maetro-app/services/db/
+  - docker build -t us.gcr.io/cloudprojects-1164/demo_auth:$TRAVIS_COMMIT $HOME/demo-maetro-app/services/auth/
+  - docker build -t us.gcr.io/cloudprojects-1164/demo_chat:$TRAVIS_COMMIT $HOME/demo-maetro-app/services/chat/
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker push us.gcr.io/cloudprojects-1164/demo_db:$TRAVIS_COMMIT
+      docker push us.gcr.io/cloudprojects-1164/demo_auth:$TRAVIS_COMMIT
+      docker push us.gcr.io/cloudprojects-1164/demo_chat:$TRAVIS_COMMIT
+    fi
+ 
