@@ -1,7 +1,8 @@
 machine:
   pre:
-    - mkdir -p /etc/keys/
-    - echo $GCLOUD_KEY > /etc/keys/gce-key.json
+    - sudo mkdir -p /etc/keys/
+    - echo $GCLOUD_KEY > gce-key.json
+    - sudo mv gce-key.json /etc/keys/gce-key.json
   services:
     - docker
     - mongodb
