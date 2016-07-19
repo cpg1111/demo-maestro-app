@@ -1,0 +1,39 @@
+machine:
+  python:
+    version: 2.7.3
+  pre:
+    - sudo mkdir -p /etc/keys/
+    - echo $GCLOUD_KEY > gce-key.json
+    - sudo mv gce-key.json /etc/keys/gce-key.json
+  services:
+    - docker
+    - mongodb
+  environment:
+    DB_CONNECT_STRING: mongodb://127.0.0.1:27017/demo
+    CLOUDSDK_PYTHON_SITEPACKAGES: 1
+    PATH: $PATH:$HOME/google-cloud-sdk/bin
+    CLOUDSDK_CORE_DISABLE_PROMPTS: true
+  post:
+    - pip install pyopenssl
+    - curl https://sdk.cloud.google.com | bash
+    - $HOME/google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file /etc/keys/gce-key.json --project cloudprojects-1164
+    - $HOME/google-cloud-sdk/bin/gcloud docker --authorize-only
+    - docker pull us.gcr.io/cloudprojects-1164/demo_db
+    - docker pull us.gcr.io/cloudprojects-1164/demo_auth
+    - docker pull us.gcr.io/cloudprojects-1164/demo_chat
+test:
+  pre:
+    - docker build -t demo_auth_test -f ./services/auth/Dockerfile_test .
+  override:
+    - docker run --rm -it -e DB_CONNECT_STRING=$DB_CONNECT_STRING demo_auth_test
+  post:
+    - docker build -t us.gcr.io/cloudprojects-1164/demo_db:$CIRCLE_SHA1 $HOME/demo-maetro-app/services/db/
+    - docker build -t us.gcr.io/cloudprojects-1164/demo_auth:$CIRCLE_SHA1 $HOME/demo-maetro-app/services/auth/
+    - docker build -t us.gcr.io/cloudprojects-1164/demo_chat:$CIRCLE_SHA1 $HOME/demo-maetro-app/services/chat/
+deployment:
+  staging:
+    branch: master
+    commands:
+      - docker push us.gcr.io/cloudprojects-1164/demo_db:$CIRCLE_SHA1
+      - docker push us.gcr.io/cloudprojects-1164/demo_auth:$CIRCLE_SHA1
+      - docker push us.gcr.io/cloudprojects-1164/demo_chat:$CIRCLE_SHA1
