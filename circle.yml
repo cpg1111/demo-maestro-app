@@ -4,7 +4,7 @@ machine:
     - echo $GCLOUD_KEY > /etc/keys/gce-key.json
   services:
     - docker
-    - mongo
+    - mongodb
   environment:
     DB_CONNECT_STRING: mongodb://127.0.0.1:27017/demo
   post:
