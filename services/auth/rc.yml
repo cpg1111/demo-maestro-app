@@ -1,0 +1,23 @@
+kind: "ReplicationController"
+apiVersion: "v1"
+metadata:
+  name: "auth"
+spec:
+  replicas: 1
+  selector:
+    name: "auth"
+  template:
+    metadata:
+      labels:
+        name: "auth"
+    spec:
+      containers:
+        - name: "auth"
+          image: "us.gcr.io/cloudprojects-1164/auth:latest"
+          ports:
+            - name: "auth"
+              containerPort: 8080
+              protocol: "TCP"
+          env:
+            - name: "DB_CONNECT_STRING"
+              value: "mongodb://mongo.c.cloudprojects-1164.internal:27017/demo"
