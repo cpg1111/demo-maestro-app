@@ -3,8 +3,9 @@ services:
   - docker
   - mongo
 before_install:
-  - mkdir -p /etc/keys/
-  - echo $GCLOUD_KEY > /etc/keys/gce-key.json
+  - sudo mkdir -p /etc/keys/
+  - echo $GCLOUD_KEY > gce-key.json
+  - sudo mv gce-key.json /etc/keys/gce-key.json
   - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file /etc/keys/gce-key.json --project cloudprojects-1164
   - gcloud docker --authorize-only
   - docker pull us.gcr.io/cloudprojects-1164/demo_db
