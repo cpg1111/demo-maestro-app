@@ -1,16 +1,25 @@
 sudo: required
+language: python
+python:
+ - 2.7
 env:
   global:
+   - CLOUDSDK_CORE_DISABLE_PROMPTS=true
    - secure: "HFK0i5hJRUK7kDJ5qql/mX7AxC6Hu7ZhlEGgF0k+dHeUgXf9BY1ggmlTLbDduwPS7tE2FmUgmtSE1elf/UKJ7Szm9wwZUdJB0tcWRN7Lo2su4cwqxdbvPxUXUa2BGKN0IOepwfmW2CuG+D8Jj8vdbtAdPtUbwCGAUN4xzwutH8hyi+zkBdaKbkt2ghMH9XSv6ge4zlyiY060XsiSZa8gaXi2k96a0uFDLutS+OTykVZM67z9pb2AJKphszEtoF1gU2ednjWMYikb/FIFTVHaqNNql9uw4yqHVo7nwAHIMsDZi4f4oq8WJnhdd1bcwcWDYNMg1uD61XVHTW+XGmmPRQKgTsXcC8blSb8gkPfbdZnPKosN+kGniBkgg6Q2O955XBKREjvqP/AFL4V0NNEDqg2V7AA58vWk7UC+csAPnWf4e0rdD3s+vHgueobnYeG7BLrwbAQ9CwNNXrXjff9MlfvKNohF1n3l7D/eebC3t+CI+ZDawhnN7wAUKR+RAX1wT7hNc6J+8nDjhT08rHnqARmjar1EuGa49imuFvLxCkYFv5VY1oghODZokgUZZ2y5usJz5VzDFaop6YMJcs9+4bCblccGoN08Ypeh7S7BEF0gD4T9PaUDFZunMERS8/T1hhkQ6jzyi8mkCt1U5yZMbWIiitJU/oychx2yWk5jyeQ="
 services:
   - docker
   - mongo
 before_install:
+  - pip install pyopenssl
+  - echo $GCLOUD_EMAIL
+  - mkdir -p ~/.keys/
+  - touch ~/.keys/GCE_key.json
   - sudo mkdir -p /etc/keys/
-  - openssl aes-256-cbc -K $encrypted_1ef95320abd8_key -iv $encrypted_1ef95320abd8_iv -in GCE_key.json.enc -out ~\/.keys/GCE_key.json -d
+  - openssl aes-256-cbc -K $encrypted_1ef95320abd8_key -iv $encrypted_1ef95320abd8_iv -in GCE_key.json.enc -out $HOME/.keys/GCE_key.json -d
   - sudo mv ~/.keys/GCE_key.json /etc/keys/gce-key.json
-  - gcloud auth activate-service-account $GCLOUD_EMAIL --key-file /etc/keys/gce-key.json --project cloudprojects-1164
-  - gcloud docker --authorize-only
+  - curl https://sdk.cloud.google.com | bash
+  - $HOME/google-cloud-sdk/bin/gcloud auth activate-service-account $GCLOUD_EMAIL --key-file /etc/keys/gce-key.json --project cloudprojects-1164
+  - $HOME/google-cloud-sdk/bin/gcloud docker --authorize-only
   - docker pull us.gcr.io/cloudprojects-1164/demo_db
   - docker pull us.gcr.io/cloudprojects-1164/demo_auth
   - docker pull us.gcr.io/cloudprojects-1164/demo_chat
