@@ -1,0 +1,5 @@
+RUBY_ENGINE = 'ruby' unless defined? RUBY_ENGINE
+source 'https://rubygems.org' unless ENV['QUICK']
+
+gem 'sinatra', '~> 1.4.7'
+
