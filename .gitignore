@@ -93,3 +93,6 @@ ENV/
 
 # vim files
 *.swp
+
+# node_modules
+**/node_modules/**/*
