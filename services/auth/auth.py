@@ -5,13 +5,13 @@ from twisted.internet.defer import inlineCallbacks, returnValue
 
 app = Klein()
 
+
 class Auth:
-    def hello(request):
-      # hello = yield "hello"
-      # returnValue(hello)
-      return "hello"
+    def hello(self, request):
+        return "hello"
 
 auth = Auth()
+
 
 @app.route("/")
 @inlineCallbacks

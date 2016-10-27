@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-class Register extends React.Components {
+export class Register extends React.Components {
     constructor(props){
         super(props);
         this.state = {};
@@ -21,5 +21,3 @@ class Register extends React.Components {
         );
     }
 }
-
-export Register
