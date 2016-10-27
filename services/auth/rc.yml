@@ -14,6 +14,8 @@ spec:
       containers:
         - name: "auth"
           image: "us.gcr.io/cloudprojects-1164/auth:latest"
+          args:
+            - "run"
           ports:
             - name: "auth"
               containerPort: 8080

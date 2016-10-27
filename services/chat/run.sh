@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$1" == "run" ]; then
-    python ./chat.py
+    python /opt/src/chat.py
 elif [ "$1" == "test" ]; then
-    python ./chat_test.py
+    exit 0
 fi

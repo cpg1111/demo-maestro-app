@@ -6,10 +6,11 @@ if [ "$1" == "test" ]; then
     # gulp test
     exit 0
 else
+    cd /srv/www/
     npm install --prefix=public/js/
     cd public/js/ && \
     gulp all
-    cd -
+    cd /srv/www/
     bundle install
     ruby app.rb -p 3000
 fi

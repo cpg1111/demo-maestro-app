@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import { Router, Route, Link, browserHistory } from 'react-router'
 
 import { Login, Register } from './auth/entry'
-// import { Chat } from './chat/entry'
+import { Chat } from './chat/entry'
 
 class App extends React.Component {
     render(){
